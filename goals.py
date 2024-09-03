@@ -15,7 +15,7 @@ class RobotButler:
         # Subscriber to receive orders from the /order topic
         self.order_sub = rospy.Subscriber('/order', String, self.order_callback)
 
-        # Waypoints (coordinates should be set according to your Gazebo environment)
+       
         self.waypoints = {
             'kitchen': self.create_waypoint(4.66, -4.06, 0.0),
             'table1': self.create_waypoint(4.31, 4.45, 0.0),
@@ -30,12 +30,12 @@ class RobotButler:
         rospy.loginfo("Robot Butler Initialized")
 
     def create_waypoint(self, x, y, yaw, frame_id='map'):
-        """Creates and returns a PoseStamped message with given coordinates."""
+        
         waypoint = PoseStamped()
         waypoint.header.frame_id = frame_id
         waypoint.pose.position.x = x
         waypoint.pose.position.y = y
-        waypoint.pose.orientation.w = 1.0  # Assumes a flat environment, only setting w component
+        waypoint.pose.orientation.w = 1.0  
         return waypoint
 
     def order_callback(self, msg):
@@ -65,7 +65,7 @@ class RobotButler:
             rospy.logwarn(f"Waypoint {location} not found")
 
     def update_state(self):
-        """Checks if the robot has reached its goal and updates the state accordingly."""
+        
         if self.state == 'NAVIGATING_TO_KITCHEN':
             if self.has_reached_goal(self.waypoints['kitchen']):
                 if self.current_order:
@@ -81,9 +81,8 @@ class RobotButler:
                 self.state = 'IDLE'
 
     def has_reached_goal(self, waypoint):
-        """Placeholder function to check if the robot has reached the goal."""
-        # TODO: Implement logic to check if the robot has reached the goal
-        return True  # Replace with actual checking logic
+        
+        return True  
 
     def run(self):
         """Main loop of the robot butler."""
